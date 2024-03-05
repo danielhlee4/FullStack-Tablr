@@ -35,6 +35,7 @@ class Reservation < ApplicationRecord
         end
     end
 
+    # the following is being validated in the front-end
     def date_cannot_be_in_the_past
         reservation_time = DateTime.new(date.year, date.month, date.day, time.hour, time.min)
         if reservation_time < DateTime.now
@@ -43,7 +44,7 @@ class Reservation < ApplicationRecord
     end
 
     def no_overlapping_reservations
-        # Extract only the time part of the datetime for an accurate comparison.
+        # Extract only hours, minutes, seconds of the datetime for an accurate comparison.
         time_only = self.time.strftime("%H:%M:%S")
       
         overlapping_reservations = Reservation.where(
